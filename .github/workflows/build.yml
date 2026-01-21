@@ -21,18 +21,15 @@ jobs:
     - name: Android SDK Hazırla
       uses: android-actions/setup-android@v3
 
-    # DÜZELTME BURADA YAPILDI:
-    # "./gradlew" yerine "gradle" komutunu kullanıyoruz.
-    # Ayrıca build cache ekledik ki daha hızlı olsun.
-    - name: Build Debug APK (Gradle Direct)
+    # DÜZELTME: Gradle sürümünü 8.2'ye sabitledik.
+    - name: Build Debug APK (Fixed Gradle)
       uses: gradle/gradle-build-action@v2
       with:
-        gradle-version: current
+        gradle-version: 8.2
         arguments: assembleDebug --stacktrace
 
     - name: APK'ları Yükle
       uses: actions/upload-artifact@v4
       with:
         name: UrlDownloader-APKs
-        # APK yolu bazen değişebilir, garanti olsun diye **/*.apk yaptık
         path: app/build/outputs/apk/debug/*.apk
