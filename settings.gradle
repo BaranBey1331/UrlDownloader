@@ -10,8 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' } // Bu satır motor için şart
     }
 }
-
 rootProject.name = "UrlDownloader"
 include ':app'
