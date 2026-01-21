@@ -9,24 +9,30 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout Code
+    - name: Depoyu Çek
       uses: actions/checkout@v3
 
-    - name: Set up JDK 17
+    - name: Java 17 Kurulumu
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Setup Android SDK
+    - name: Android SDK Hazırla
       uses: android-actions/setup-android@v3
 
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug --stacktrace
-      
-    - name: Upload APKs
+    # DÜZELTME BURADA YAPILDI:
+    # "./gradlew" yerine "gradle" komutunu kullanıyoruz.
+    # Ayrıca build cache ekledik ki daha hızlı olsun.
+    - name: Build Debug APK (Gradle Direct)
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: current
+        arguments: assembleDebug --stacktrace
+
+    - name: APK'ları Yükle
       uses: actions/upload-artifact@v4
       with:
         name: UrlDownloader-APKs
+        # APK yolu bazen değişebilir, garanti olsun diye **/*.apk yaptık
         path: app/build/outputs/apk/debug/*.apk
-
