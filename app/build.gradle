@@ -15,6 +15,7 @@ android {
         versionName "1.0.0"
     }
 
+    // İşlemciye göre APK bölme (Hız optimize)
     splits {
         abi {
             enable true
