@@ -1,4 +1,4 @@
-name: Production Build
+name: Pro Build (Cache On)
 
 on:
   push:
@@ -12,24 +12,24 @@ jobs:
     - name: Depoyu Çek
       uses: actions/checkout@v3
 
-    - name: Java 17 Kurulumu
+    - name: JDK 17 Kur
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Android SDK Hazırla
+    - name: Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: APK Derle (Cache Kapalı - Güvenli Mod)
+    # Cache artık açık ve loglar temiz
+    - name: APK Derle
       uses: gradle/gradle-build-action@v2
       with:
         gradle-version: 8.2
-        cache-disabled: true
-        arguments: assembleDebug --stacktrace --info
+        arguments: assembleDebug
 
-    - name: APK'ları Topla
+    - name: APK Yükle
       uses: actions/upload-artifact@v4
       with:
-        name: UrlDownloader-APKs
+        name: UrlDownloader-Pro
         path: app/build/outputs/apk/debug/*.apk
