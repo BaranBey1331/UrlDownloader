@@ -10,7 +10,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // Jitpack kütüphane motoru için şart
         maven { url 'https://jitpack.io' }
     }
 }
