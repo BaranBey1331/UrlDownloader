@@ -11,15 +11,14 @@ android {
         applicationId "com.pro.urldownloader"
         minSdk 26
         targetSdk 34
-        versionCode 3
-        versionName "3.0.Hybrid"
+        versionCode 4
+        versionName "4.0.Fixed"
 
         ndk {
             abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
         }
     }
 
-    // Java ve Kotlin karışık çalışabilsin diye ayarlar
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -27,13 +26,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
-    // FFmpeg dosyaları bazen çakışır, bu kod çakışmayı engeller
+    
+    // Çakışmaları önleyen ayar
     packagingOptions {
-        pickFirst 'lib/x86/libc++_shared.so'
-        pickFirst 'lib/x86_64/libc++_shared.so'
-        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
-        pickFirst 'lib/arm64-v8a/libc++_shared.so'
+        resources {
+            excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/license.txt', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/notice.txt', 'META-INF/ASL2.0', 'META-INF/*.kotlin_module']
+        }
     }
 }
 
@@ -41,13 +39,11 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
-    
-    // --- KRİTİK DÜZELTME ---
-    // Sonuna '@aar' ekleyerek Gradle'a "Java dosyası arama, Android dosyası indir" diyoruz.
-    implementation ('com.github.yausername.youtubedl-android:library:0.14.0@aar') {
-        transitive = true
-    }
-    implementation ('com.github.yausername.youtubedl-android:ffmpeg:0.14.0@aar') {
-        transitive = true
-    }
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+
+    // --- DÜZELTME BURADA ---
+    // @aar kaldırdık ve sürümü güncelledik.
+    // Bu kütüphane video indirme işleminin kalbidir.
+    implementation 'com.github.yausername.youtubedl-android:library:master-SNAPSHOT'
+    implementation 'com.github.yausername.youtubedl-android:ffmpeg:master-SNAPSHOT'
 }
